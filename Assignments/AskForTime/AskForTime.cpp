@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -16,8 +17,9 @@ int main() {
 
 	seconds = totalSeconds;
 	
-
-	cout << hours << ":" << minutes << ":" << seconds << endl;
+	cout << setfill('0') << setw(2) << hours << ":"
+		<< setfill('0') << setw(2) << minutes << ":"
+		<< setfill('0') << setw(2) << seconds << endl;
 
 	return 0;
 }
