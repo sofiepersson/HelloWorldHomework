@@ -20,6 +20,7 @@ String::String(const char* defaultText, size_t maxSize) : maxSize{ maxSize }, le
 }
 
 String::String(const String& other) {
+	cout << "Deep copies " << other.buffer << endl;
 	length = other.length;
 	maxSize = other.maxSize;
 	buffer = new char[maxSize] {};
@@ -29,6 +30,7 @@ String::String(const String& other) {
 }
 
 String& String::operator=(const String& other) {
+	cout << "Deep copies " << other.buffer << endl;
 	if (this == &other) return *this; // performance benefit if `a = a`
 	// first, clean up this object, e.g. delete existing Items, Buffers, etc.
 	delete[] buffer;
@@ -42,9 +44,25 @@ String& String::operator=(const String& other) {
 	return *this;
 }
 
+String::String(String&& other) noexcept { // noexcept is necessary, because else the compiler will prefer using the String& constructor
+	cout << "Moving " << other.buffer << endl;
+	// move all arguments from the other string to this string
+	length = other.length;
+	maxSize = other.maxSize;
+	buffer = other.buffer;
+	// set the arguments to null on the other string
+	// to ensure that the other string won't delete our buffer when it gets destructed
+	other.buffer = nullptr;
+	other.length = NULL;
+	other.maxSize = NULL;
+}
+
 String::~String() {
-	cout << buffer << " is destructed." << endl;
-	delete[] buffer;
+	if (buffer) {
+		cout << buffer << " is destructed." << endl;
+		delete[] buffer;
+	}
+	else cout << "null is destructed." << endl;
 }
 
 const void String::Append(const char* text) {

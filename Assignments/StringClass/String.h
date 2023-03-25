@@ -18,6 +18,8 @@ public:
 
 	String& operator=(const String& other);
 
+	String(String&& other) noexcept;
+
 	~String();
 
 	const void Append(const char* text);

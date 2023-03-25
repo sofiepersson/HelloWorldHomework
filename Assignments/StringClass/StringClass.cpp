@@ -1,19 +1,19 @@
 #include <iostream>
+#include <utility>
 #include "String.h"
 
 using namespace std;
 
-int main() {
-    String a{ "Hello", 10};
-    a.Print(); // a is fine
-    {
-        String b{ "Poop", 5 };
-        b = a;
-        a.Append(" a");
-        b.Print();
-        a.Print(); // a is still fine
-    }
-    a.Print(); // now, a is broken!! :o
+class Hero {
+    String _name;
+public:
+    Hero(const String& name) : _name{ name } { }
+    Hero(String&& name) : _name{ move(name) } { }
+};
 
+int main() {
+    String zeusName{ "Zeus", 100 };
+    Hero zeus{ move(zeusName) };
+    Hero hercules{ String{ "Hercules", 100 } };
     return 0;
 }
