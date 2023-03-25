@@ -57,6 +57,23 @@ String::String(String&& other) noexcept { // noexcept is necessary, because else
 	other.maxSize = NULL;
 }
 
+String& String::operator=(String&& other) noexcept { //noexcept is needed again
+	if (this == &other) return *this;
+	// clean up own values
+	length = 0;
+	maxSize = 0;
+	buffer = nullptr;
+	// assign other values to own values
+	length = other.length;
+	maxSize = other.maxSize;
+	buffer = other.buffer;
+	// set other values to null
+	other.buffer = nullptr;
+	other.length = NULL;
+	other.maxSize = NULL;
+	return *this;
+}
+
 String::~String() {
 	if (buffer) {
 		cout << buffer << " is destructed." << endl;

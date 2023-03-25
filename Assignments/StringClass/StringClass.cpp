@@ -12,8 +12,10 @@ public:
 };
 
 int main() {
-    String zeusName{ "Zeus", 100 };
-    Hero zeus{ move(zeusName) };
-    Hero hercules{ String{ "Hercules", 100 } };
+    String zeus{ "Zeus", 7 };
+    String hercules{ "Hercules", 10 }; // here, hercules gets constructed
+    // moves value from zeus to hercules using move assignment operator:
+    hercules = move(zeus);
+    // should not use value of zeus anymore!
     return 0;
 }

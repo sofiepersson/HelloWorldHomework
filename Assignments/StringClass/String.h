@@ -20,6 +20,8 @@ public:
 
 	String(String&& other) noexcept;
 
+	String& operator=(String&& other) noexcept;
+
 	~String();
 
 	const void Append(const char* text);
