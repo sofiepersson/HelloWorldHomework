@@ -5,9 +5,9 @@ using namespace std;
 class String {
     int length{};
     char* buffer{};
-    size_t maxSize{};
+    const size_t maxSize{};
 
-    int GetLength(const char* text) {
+    const int GetLength(const char* text) {
         int count{};
         while (*text) {
             ++count;
@@ -31,7 +31,7 @@ public:
         delete[] buffer;
     }
 
-    void Append(const char* text) {
+    const void Append(const char* text) {
         int textLength = GetLength(text);
         length += textLength;
         if (length > maxSize) {
@@ -42,7 +42,7 @@ public:
         }
     }
 
-    void AppendLine(const char* text) {
+    const void AppendLine(const char* text) {
         int textLength = GetLength(text);
         if (textLength + length > maxSize) {
             throw exception("Text can not be longer than max size.");
@@ -54,13 +54,13 @@ public:
         length += textLength + 1;
     }
 
-    void Print() {
+    const void Print() {
         for (int i = 0; i < length; ++i) {
             cout << buffer[i];
         }
     }
 
-    char* GetString() {
+    const char* GetString() {
         return buffer;
     }
 };
@@ -75,7 +75,7 @@ int main() {
     a.Print();
     b.Print();
 
-    char* aString = a.GetString();
+    const char* aString = a.GetString();
     cout << aString << endl;
 
     return 0;
