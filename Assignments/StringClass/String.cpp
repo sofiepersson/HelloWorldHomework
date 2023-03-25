@@ -31,9 +31,7 @@ String::String(const String& other) {
 String& String::operator=(const String& other) {
 	if (this == &other) return *this; // performance benefit if `a = a`
 	// first, clean up this object, e.g. delete existing Items, Buffers, etc.
-	length = 0;
-	maxSize = 0;
-	buffer = nullptr;
+	delete[] buffer;
 	// then, clone the other object, e.g. copy their Items, Buffers etc.
 	length = other.length;
 	maxSize = other.maxSize;
