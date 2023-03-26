@@ -9,12 +9,12 @@ const int String::GetLength(const char* text) {
 	return count;
 }
 
-String::String(size_t maxSize) : maxSize{ maxSize }, length{ 0 }, buffer{ new char[maxSize] {} } {
+String::String(const size_t maxSize) : maxSize{ maxSize }, length{ 0 }, buffer{ new char[maxSize] {} } {
 	cout << "Empty string constructed." << endl;
 }
 
 
-String::String(const char* defaultText, size_t maxSize) : maxSize{ maxSize }, length{ 0 }, buffer{ new char[maxSize] {} } {
+String::String(const char* defaultText, const size_t maxSize) : maxSize{ maxSize }, length{ 0 }, buffer{ new char[maxSize] {} } {
 	cout << "Non-empty string " << defaultText << " constructed." << endl;
 	Append(defaultText);
 }
@@ -80,6 +80,38 @@ String::~String() {
 		delete[] buffer;
 	}
 	else cout << "null is destructed." << endl;
+}
+
+String String::operator+(String other) {
+	int thisLength = GetLength(this->buffer);
+	int otherLength = GetLength(other.buffer);
+	const size_t newMaxSize = this->maxSize + other.maxSize;
+	String newString{ newMaxSize };
+	newString.Append(this->buffer);
+	newString.Append(other.buffer);
+	return newString;
+}
+
+void String::operator+=(String other) {
+	this->Append(other.buffer);
+}
+
+char String::operator[](size_t index) {
+	for (size_t i = 0; i < this->length; ++i) {
+		if (i == index) return *(this->buffer+i);
+	}
+}
+
+ostream& operator<<(ostream& os, const String& string) {
+	return (os << string.buffer << endl);
+}
+
+String* String::operator<(String& other) {
+	for (size_t i = 0; i < this->length; ++i) {
+		if (*(this->buffer + i) == *(other.buffer + i)) continue;
+		if (*(this->buffer + i) < *(other.buffer + i)) return this;
+		else return &other;
+	}
 }
 
 const void String::Append(const char* text) {
